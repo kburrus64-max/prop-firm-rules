@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="640" viewBox="0 0 1280 640">
+  <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0b1020"/><stop offset="1" stop-color="#141e3a"/></linearGradient></defs>
+  <rect width="1280" height="640" fill="url(#g)"/>
+  <text x="80" y="120" font-family="Open Sans" font-size="34" font-weight="700" fill="#3ddc97">kburrus64-max / prop-firm-rules</text>
+  <text x="80" y="230" font-family="Open Sans" font-size="66" font-weight="800" fill="#e8ecf6">Prop firm drawdown rules,</text>
+  <text x="80" y="310" font-family="Open Sans" font-size="66" font-weight="800" fill="#e8ecf6">sourced and computable.</text>
+  <text x="80" y="380" font-family="Open Sans" font-size="30" fill="#9aa6c2">Open dataset (9 firms, 13 programs) + JS/Python calculator · MIT</text>
+  <text x="80" y="428" font-family="Open Sans" font-size="26" fill="#9aa6c2">FTMO · FundedNext · The5ers · E8 · FundingPips · Alpha Capital · Blue Guardian · Topstep · Apex</text>
+  <polyline points="80,540 200,520 300,550 420,500 520,525 640,490 740,530 820,556 900,566" fill="none" stroke="#5aa9ff" stroke-width="5" stroke-linejoin="round"/>
+  <line x1="80" y1="580" x2="1200" y2="580" stroke="#ff5d6c" stroke-width="3" stroke-dasharray="10 8"/>
+  <text x="920" y="560" font-family="Open Sans" font-size="24" font-weight="700" fill="#ffb547">daily-loss / max-DD floor</text>
+  <text x="80" y="620" font-family="Open Sans" font-size="22" fill="#5aa9ff">Live calculator: floorguard-kappa.vercel.app/tools/drawdown-calculator.html</text>
+</svg>

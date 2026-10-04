@@ -1,5 +1,9 @@
 # prop-firm-rules: prop firm drawdown rules dataset + calculator (JS & Python)
 
+**▶ Live calculator (free, no sign-up, runs in your browser): [floorguard-kappa.vercel.app/tools/drawdown-calculator.html](https://floorguard-kappa.vercel.app/tools/drawdown-calculator.html)**
+
+![prop-firm-rules: sourced prop firm drawdown rules dataset and calculator](.github/social-preview.png)
+
 An open, **sourced** dataset of prop-firm risk rules (daily loss limit, max drawdown, static vs trailing, lock level,
 daily reset time) for **FTMO, FundedNext, The5ers, E8 Markets, FundingPips, Alpha Capital, Blue Guardian, Topstep and
 Apex Trader Funding**, plus a tiny zero-dependency **drawdown calculator** library in JavaScript and Python.
