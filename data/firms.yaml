@@ -1,0 +1,521 @@
+# Generated from data/firms.json (same content). Rules change: verify with the firm.
+schemaVersion: 1
+name: prop-firm-rules
+lastVerified: '2026-10-04'
+license: MIT
+homepage: https://floorguard-kappa.vercel.app/tools/drawdown-calculator.html
+disclaimer: Prop firms change rules often and many let you choose different percentages at checkout. Each value was read on
+  the cited page on lastVerified (unless verified=false). Your firm's dashboard and current terms are the source of truth.
+  Not affiliated with any firm. Not financial advice.
+vocabulary:
+- 'dailyLoss.amountBase: ''initial'' = % of initial balance; ''reference'' = % of the day-start reference value. dailyLoss.reference:
+  ''balance'' = day-start balance; ''max'' = higher of day-start balance and day-start equity.'
+- 'maxDrawdown.mode: ''static'' = floor fixed at initial - amount; ''trailing_eod'' = floor trails the highest end-of-day
+  balance; ''trailing_closed'' = floor trails the highest closed (realised) balance; ''trailing_intraday'' = floor trails
+  the peak balance including open profit. lockAt = floor stops trailing once it reaches initial + lockAt (null = never locks
+  in this program).'
+firms:
+- id: ftmo
+  name: FTMO
+  programs:
+  - id: ftmo_2step
+    name: FTMO Challenge 2-Step
+    sizes:
+    - 10000
+    - 25000
+    - 50000
+    - 100000
+    - 200000
+    sizesVerified: false
+    dailyLoss:
+      pct: 5
+      amountBase: initial
+      reference: balance
+      kind: hard
+    maxDrawdown:
+      pct: 10
+      mode: static
+      lockAt: null
+    reset: 00:00 CE(S)T (Prague)
+    verified: true
+    notes: 'Limit = balance at 00:00 CE(S)T minus 5% of initial capital. Equity (incl. floating P/L, swaps, commissions) must
+      not drop below it. Max loss: equity must stay above 90% of initial.'
+    sources:
+    - https://ftmo.com/en/trading-objectives/
+    - https://academy.ftmo.com/lesson/maximum-daily-loss/
+    - https://academy.ftmo.com/lesson/maximum-loss/
+    lastVerified: '2026-10-04'
+  - id: ftmo_1step
+    name: FTMO Challenge 1-Step
+    sizes:
+    - 10000
+    - 25000
+    - 50000
+    - 100000
+    - 200000
+    sizesVerified: false
+    dailyLoss:
+      pct: 3
+      amountBase: initial
+      reference: balance
+      kind: hard
+    maxDrawdown:
+      pct: 10
+      mode: trailing_eod
+      lockAt: null
+    reset: 00:00 CE(S)T (Prague)
+    verified: true
+    notes: Max Loss Limit = highest 00:00 CE(S)T balance (or initial, if higher) minus 10% of initial. It can only rise. FTMO
+      does not state a lock level for the 1-Step evaluation.
+    sources:
+    - https://ftmo.com/en/trading-objectives/
+    lastVerified: '2026-10-04'
+  policy:
+    copyTrading: own_accounts_only
+    copyTradingNotes: '"Copy trading across your own accounts is permitted, provided each account independently and fully
+      complies with all applicable rules." Copying third parties / signal services / master accounts of others is forbidden.
+      (Quoted from the FTMO Futures page; the CFD Forbidden Trading Practices page bans third-party access and coordinated
+      trading but I did not find the same sentence there (so CFD own-account copying is not confirmed).)'
+    multiAccount: Accounts cannot be merged; each is managed separately (Futures FAQ).
+    automation: allowed
+    automationNotes: EAs/algos allowed if legitimate; third-party EAs risk "copy trading across registrations".
+    cloudCopier: unknown
+    remoteServerTrading: unknown
+    verified: true
+    sources:
+    - https://ftmo.com/en/futures/forbidden-trading-practices
+    - https://ftmo.com/en/forbidden-trading-practices/
+    - https://ftmo.com/en/futures/faq/ftr-which-instruments-can-i-trade-and-what-strategies-am-i-allowed-to-use/
+    - https://ftmo.com/en/futures/faq/can-i-merge-my-trading-accounts/
+    lastVerified: '2026-10-04'
+- id: fundednext
+  name: FundedNext
+  programs:
+  - id: fundednext_stellar_2step
+    name: Stellar 2-Step (CFD)
+    sizes:
+    - 6000
+    - 15000
+    - 25000
+    - 50000
+    - 100000
+    - 200000
+    sizesVerified: false
+    dailyLoss:
+      pct: 5
+      amountBase: initial
+      reference: balance
+      kind: hard
+    maxDrawdown:
+      pct: 10
+      mode: static
+      lockAt: null
+    reset: 00:00 server time (GMT+2, GMT+3 in DST)
+    verified: true
+    notes: 'Daily loss = 5% of initial balance, measured from the day''s starting balance on closed + floating results. Max
+      loss: balance/equity must stay above 90% of initial.'
+    sources:
+    - https://help.fundednext.com/en/articles/8019811-how-can-i-calculate-the-daily-loss-limit
+    - https://help.fundednext.com/en/articles/8019812-how-can-i-calculate-the-maximum-loss-limit
+    - https://fundednext.com/general-rules/cfds/trading-objectives
+    lastVerified: '2026-10-04'
+  policy:
+    copyTrading: own_accounts_only
+    copyTradingNotes: Allowed only between your own FundedNext *Challenge* accounts (combined <= $300K, one designated master).
+      Copying that involves a FundedNext (funded) Account is prohibited even between your own accounts.
+    multiAccount: $300K combined cap for copied/merged accounts.
+    automation: restricted
+    automationNotes: EA rules depend on account size/add-on (secondary search summary, verified false).
+    cloudCopier: banned
+    cloudCopierNotes: '"Using external cloud-based copy trading services, such as Social Trader Tools, Traders Connect, or
+      Duplikum, is not allowed. Using a VPS-based trade copier is permitted"'
+    remoteServerTrading: unknown
+    verified: true
+    sources:
+    - https://help.fundednext.com/en/articles/8019805-what-is-the-copy-trading-rule-at-fundednext
+    sourcesListedButNotOpened:
+    - https://help.fundednext.com/en/articles/8020763-is-ea-allowed-in-fundednext
+    lastVerified: '2026-10-04'
+- id: the5ers
+  name: The5ers
+  programs:
+  - id: the5ers_high_stakes
+    name: High Stakes (2-Step)
+    sizes:
+    - 2500
+    - 5000
+    - 10000
+    - 25000
+    - 50000
+    - 100000
+    sizesVerified: true
+    dailyLoss:
+      pct: 5
+      amountBase: reference
+      reference: max
+      kind: hard
+    maxDrawdown:
+      pct: 10
+      mode: static
+      lockAt: null
+    reset: 00:00 MT5 server time (GMT+2 winter, GMT+3 summer)
+    verified: true
+    notes: Daily loss = 5% of the higher of the day's starting balance or starting equity. Max loss = 10% of initial balance
+      (absolute).
+    sources:
+    - https://help.the5ers.com/what-is-the-maximum-loss-and-the-maximum-daily-loss-in-the-high-stakes-program/
+    - https://help.the5ers.com/what-are-the-general-rules-for-the-high-stakes-program/
+    lastVerified: '2026-10-04'
+  policy:
+    copyTrading: own_accounts_only
+    copyTradingNotes: '"Yes, you can copy your own trades across all of your accounts without a violation." Multiple Bootcamp
+      accounts must use different strategies. Secondary sources: copying stops above $500K under management (verified: false).'
+    multiAccount: Max 4 active Bootcamp accounts; >$500K cap on identical trades (secondary, unverified).
+    automation: unknown
+    cloudCopier: unknown
+    remoteServerTrading: unknown
+    verified: true
+    sources:
+    - https://the5ers.com/faqs/can-i-copy-my-own-trades/
+    - https://the5ers.com/bootcamp/
+    secondarySources:
+    - https://propvator.com/blog/is-copy-trading-allowed-at-the5ers/
+    lastVerified: '2026-10-04'
+- id: e8
+  name: E8 Markets
+  programs:
+  - id: e8_one
+    name: E8 One (default 4% daily / 6% dynamic)
+    sizes:
+    - 5000
+    - 10000
+    - 25000
+    - 50000
+    - 100000
+    - 200000
+    sizesVerified: false
+    dailyLoss:
+      pct: 4
+      amountBase: initial
+      reference: balance
+      kind: hard
+    maxDrawdown:
+      pct: 6
+      mode: trailing_closed
+      lockAt: 0
+    reset: 00:00 server time (time zone not stated on the page)
+    verified: true
+    notes: E8 lets you customise both percentages at checkout; 4% and 6% are the values in E8's own examples. Dynamic drawdown
+      rises only when you close profit and locks at the initial balance.
+    unverifiedFields:
+    - reset time zone
+    sources:
+    - https://help.e8markets.com/en/articles/11769446-daily-drawdown
+    - https://help.e8markets.com/en/articles/11782996-dynamic-drawdown
+    lastVerified: '2026-10-04'
+  policy:
+    copyTrading: own_accounts_only
+    copyTradingNotes: '"E8 Markets allows copy trading across all accounts ... as long as these accounts belong to you. You
+      are free to use any trade copying tool or software." No team trading, no signal services.'
+    multiAccount: Max allocation per user; multiple E8X profiles to exceed it are prohibited.
+    automation: unknown
+    cloudCopier: allowed
+    remoteServerTrading: unknown
+    verified: true
+    sources:
+    - https://help.e8markets.com/en/articles/9453469-can-i-copy-trades-or-trade-as-a-team
+    sourcesListedButNotOpened:
+    - https://help.e8markets.com/en/articles/6929927-trading-policies-and-prohibited-trading-strategies
+    lastVerified: '2026-10-04'
+- id: fundingpips
+  name: FundingPips
+  programs:
+  - id: fundingpips_2step_5
+    name: 2 Step Standard (5% daily)
+    sizes:
+    - 5000
+    - 10000
+    - 25000
+    - 50000
+    - 100000
+    sizesVerified: true
+    dailyLoss:
+      pct: 5
+      amountBase: reference
+      reference: max
+      kind: hard
+    maxDrawdown:
+      pct: 10
+      mode: static
+      lockAt: null
+    reset: 00:00 platform time (UTC+3)
+    verified: true
+    notes: Daily loss = 5% of the higher of opening balance or opening equity. Max loss is a static floor at 90% of starting
+      account size.
+    sources:
+    - https://help.fundingpips.com/hc/en-us/articles/34501809112081-2-Step-Standard
+    lastVerified: '2026-10-04'
+  - id: fundingpips_2step_3
+    name: 2 Step Standard (3% daily add-on)
+    sizes:
+    - 5000
+    - 10000
+    - 25000
+    - 50000
+    - 100000
+    sizesVerified: true
+    dailyLoss:
+      pct: 3
+      amountBase: reference
+      reference: max
+      kind: hard
+    maxDrawdown:
+      pct: 10
+      mode: static
+      lockAt: null
+    reset: 00:00 platform time (UTC+3)
+    verified: true
+    notes: Same calculation as the 5% configuration with a 3% daily limit.
+    sources:
+    - https://help.fundingpips.com/hc/en-us/articles/34501809112081-2-Step-Standard
+    lastVerified: '2026-10-04'
+  policy:
+    copyTrading: unknown
+    copyTradingNotes: 'T&C: "Copy trading or account management by a third-party vendor will also result in account termination."
+      FundingPips runs its own Trade Copier (beta, MT5/cTrader/Match-Trader, FP account must be the Lead, max 4 accounts).
+      Whether an outside copier between your own FP accounts is allowed is not stated (so: unknown). Exception: the 1K Instant
+      Giveaway account explicitly allows third-party EAs and copiers.'
+    multiAccount: T&C flags substantially different position sizes/counts across the customer's accounts.
+    automation: restricted
+    automationNotes: Third-party EA allowed only when it functions as a trade or risk manager.
+    cloudCopier: unknown
+    remoteServerTrading: unknown
+    verified: true
+    sources:
+    - https://fundingpips.com/terms-and-conditions
+    - https://help.fundingpips.com/hc/en-us/articles/49580068780817-Trade-Copier
+    - https://help.fundingpips.com/hc/en-us/articles/46800669451153-1K-Instant-Giveaway
+    lastVerified: '2026-10-04'
+- id: alpha_capital
+  name: Alpha Capital
+  programs:
+  - id: alpha_pro_10
+    name: Alpha Pro 10%
+    sizes:
+    - 5000
+    - 10000
+    - 25000
+    - 50000
+    - 100000
+    - 200000
+    sizesVerified: false
+    dailyLoss:
+      pct: 5
+      amountBase: reference
+      reference: balance
+      kind: hard
+    maxDrawdown:
+      pct: 10
+      mode: static
+      lockAt: null
+    reset: 00:00 GMT+3 (broker time)
+    verified: true
+    notes: 'Balance-based daily limit: 5% of the day''s starting balance; floating P/L carried in from the previous day is
+      not added to the reference. Static 10% max drawdown from the starting balance.'
+    sources:
+    - https://help.alphacapitalgroup.uk/en/articles/6934210-what-are-the-daily-risk-limits-and-how-do-they-work
+    - https://help.alphacapitalgroup.uk/en/articles/8420429-alpha-pro-8-10
+    - https://help.alphacapitalgroup.uk/en/articles/6934220-what-is-the-maximum-total-loss
+    lastVerified: '2026-10-04'
+  - id: alpha_pro_8
+    name: Alpha Pro 8%
+    sizes:
+    - 5000
+    - 10000
+    - 25000
+    - 50000
+    - 100000
+    - 200000
+    sizesVerified: false
+    dailyLoss:
+      pct: 4
+      amountBase: reference
+      reference: balance
+      kind: hard
+    maxDrawdown:
+      pct: 8
+      mode: static
+      lockAt: null
+    reset: 00:00 GMT+3 (broker time)
+    verified: true
+    notes: Balance-based 4% daily limit, static 8% max drawdown.
+    sources:
+    - https://help.alphacapitalgroup.uk/en/articles/6934210-what-are-the-daily-risk-limits-and-how-do-they-work
+    - https://help.alphacapitalgroup.uk/en/articles/8420429-alpha-pro-8-10
+    lastVerified: '2026-10-04'
+- id: blue_guardian
+  name: Blue Guardian
+  programs:
+  - id: blue_guardian_2step
+    name: 2 Step Standard
+    sizes:
+    - 10000
+    - 25000
+    - 50000
+    - 100000
+    - 200000
+    sizesVerified: false
+    dailyLoss:
+      pct: 4
+      amountBase: initial
+      reference: max
+      kind: hard
+    maxDrawdown:
+      pct: 8
+      mode: static
+      lockAt: null
+    reset: 5:00 pm EST (New York)
+    verified: true
+    notes: Daily limit = higher of balance or equity at the 5pm EST rollover minus a fixed 4% of initial balance. Static 8%
+      overall drawdown. Funded accounts also have 'Guardian Shield' (auto-close at 2% floating loss), which this calculator
+      does not model.
+    sources:
+    - https://help.blueguardian.com/en/articles/14062291-2-step-standard-rules
+    lastVerified: '2026-10-04'
+  policy:
+    copyTrading: own_accounts_only
+    copyTradingNotes: Third-party copier software allowed between accounts legally owned by you (BG-to-BG, evaluation-to-funded,
+      BG-to-external). No copying other traders, no third parties executing for you.
+    multiAccount: not stated on the rules page.
+    automation: allowed
+    automationNotes: EAs are allowed. While VPNs and VPS are allowed, using either to bypass copy/group/signal rules is prohibited.
+    cloudCopier: allowed
+    remoteServerTrading: allowed
+    verified: true
+    sources:
+    - https://help.blueguardian.com/en/articles/14062291-2-step-standard-rules
+    lastVerified: '2026-10-04'
+- id: topstep
+  name: Topstep
+  programs:
+  - id: topstep_combine
+    name: Trading Combine (futures)
+    sizes:
+    - 50000
+    - 100000
+    - 150000
+    sizesVerified: true
+    dailyLoss: null
+    dailyLossNote: No mandatory Daily Loss Limit on the Trading Combine; it is an optional add-on (and hitting it pauses trading,
+      it is not a rule violation). Enter your own if you chose one.
+    maxDrawdown:
+      amountBySize:
+        '50000': 2000
+        '100000': 3000
+        '150000': 4500
+      mode: trailing_eod
+      lockAt: 0
+    reset: End of trading day; Topstep's session is commonly cited as ending 3:10 pm CT / new day 5:00 pm CT (not confirmed
+      on an official page)
+    verified: true
+    unverifiedFields:
+    - reset time
+    notes: Maximum Loss Limit trails the end-of-day balance, never moves down, and locks permanently at the starting balance.
+      Monitored in real time including unrealized P&L.
+    sources:
+    - https://help.topstep.com/en/articles/8284204-what-is-the-maximum-loss-limit
+    - https://help.topstep.com/en/articles/10490293-daily-loss-limit-in-the-trading-combine-and-express-funded-account
+    lastVerified: '2026-10-04'
+  policy:
+    copyTrading: own_accounts_only
+    copyTradingNotes: 'Prohibited: coordinated trading with others and cross-account hedging. Own-account copying via the
+      native TopstepX copier per secondary sources (verified false).'
+    multiAccount: Cross-account hedging (opposite positions across your own accounts) is prohibited.
+    automation: restricted
+    automationNotes: Own bots via TopstepX/ProjectX API allowed, from your personal device only; no HFT.
+    cloudCopier: banned
+    remoteServerTrading: banned
+    remoteServerTradingNotes: '"All trading activity must originate from your personal device. The use of VPS, VPNs, and remote
+      servers is prohibited" ... "your server can watch and record, but it cannot trade."'
+    verified: true
+    sources:
+    - https://help.topstep.com/en/articles/11187768-topstepx-api-access
+    - https://help.topstep.com/en/articles/10296582-prohibited-conduct
+    secondarySources:
+    - https://copilink.com/best-trade-copier-for-prop-firms
+    lastVerified: '2026-10-04'
+- id: apex
+  name: Apex Trader Funding
+  programs:
+  - id: apex_eod_eval
+    name: EOD Evaluation (futures)
+    sizes:
+    - 25000
+    - 50000
+    - 100000
+    - 150000
+    sizesVerified: true
+    dailyLoss:
+      amountBySize:
+        '25000': 500
+        '50000': 1000
+        '100000': 1500
+        '150000': 2000
+      reference: balance
+      kind: pause
+    maxDrawdown:
+      amountBySize:
+        '25000': 1000
+        '50000': 2000
+        '100000': 3000
+        '150000': 4000
+      mode: trailing_eod
+      lockAt: null
+    reset: Trading day resets 6:00 pm ET
+    verified: true
+    notes: Hitting the Daily Loss Limit pauses trading for the session; it does not fail the evaluation. Touching the EOD
+      threshold fails it. Whether/where the threshold stops trailing in an evaluation depends on the data vendor, so no lock
+      is modelled here.
+    sources:
+    - https://apextraderfunding.com/help-center/eod-trailing-drawdown-accounts/eod-evaluations/
+    lastVerified: '2026-10-04'
+  - id: apex_intraday_eval
+    name: Intraday Trailing Evaluation (futures)
+    sizes:
+    - 25000
+    - 50000
+    - 100000
+    - 150000
+    sizesVerified: true
+    dailyLoss: null
+    dailyLossNote: Apex's Intraday Trailing page lists no Daily Loss Limit for this account type.
+    maxDrawdown:
+      amountBySize:
+        '25000': 1000
+        '50000': 2000
+        '100000': 3000
+        '150000': 4000
+      mode: trailing_intraday
+      lockAt: null
+    reset: Threshold does not reset daily
+    verified: true
+    notes: Threshold trails the peak balance including unrealized profit, in real time. On Rithmic/WealthCharts evaluations
+      it stops at the profit-target balance; on Tradovate it trails indefinitely. Performance Accounts lock at starting balance
+      + $100.
+    sources:
+    - https://apextraderfunding.com/help-center/intraday-trailing-drawdown-accounts/intraday-trailing-drawdown-explained/
+    lastVerified: '2026-10-04'
+  policy:
+    copyTrading: unknown
+    copyTradingNotes: 'Official page forbids "trade copying with other traders". Secondary sources say copying between your
+      own PAs is allowed, but the same official page also says "No Automation or Algorithm Usage allowed" (so: unknown).'
+    multiAccount: Multiple user accounts prohibited; account stacking rules apply.
+    automation: banned
+    cloudCopier: unknown
+    remoteServerTrading: unknown
+    verified: true
+    sources:
+    - https://apextraderfunding.com/help-center/getting-started/prohibited-activities/
+    secondarySources:
+    - https://safepropfirms.com/firm/apex-trader-funding/
+    lastVerified: '2026-10-04'

@@ -1,0 +1,15 @@
+{
+  "name": "prop-firm-rules",
+  "version": "0.1.0",
+  "description": "Sourced prop firm drawdown rules (FTMO, FundedNext, The5ers, E8, FundingPips, Alpha Capital, Blue Guardian, Topstep, Apex) and a zero-dependency drawdown calculator.",
+  "type": "module",
+  "main": "js/index.mjs",
+  "exports": { ".": "./js/index.mjs", "./calc": "./js/calc.mjs", "./data/firms.json": "./data/firms.json" },
+  "files": ["js/calc.mjs", "js/index.mjs", "data/"],
+  "scripts": { "test": "node --test js/test/ && python3 -m unittest discover -s python/tests", "table": "node scripts/rules-table.mjs" },
+  "keywords": ["prop-firm", "drawdown", "trailing-drawdown", "daily-loss-limit", "ftmo", "topstep", "apex", "funded-trader", "risk-management", "calculator"],
+  "homepage": "https://floorguard-kappa.vercel.app/tools/drawdown-calculator.html",
+  "repository": { "type": "git", "url": "https://github.com/kburrus64-max/prop-firm-rules.git" },
+  "license": "MIT",
+  "engines": { "node": ">=18" }
+}
