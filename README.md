@@ -121,6 +121,20 @@ Output: `daily` and `drawdown` (`floor`, `room`, `amount`, `status`), `maxLots`,
 
 Python uses the same names in snake_case (`current_balance`, `high_water_mark`, ...).
 
+## Use from AI agents
+
+The same dataset is served live, free and read-only (no key, CORS open, ~60 requests/minute per IP) by FloorGuard:
+
+- **MCP server** (Streamable HTTP, no auth): `https://floorguard-kappa.vercel.app/api/mcp`
+  - Tools: `list_firms`, `get_rules(program)`, `check_drawdown(program, accountSize, currentEquity, ...)`
+  - Listed in the official [MCP Registry](https://registry.modelcontextprotocol.io/v0/servers?search=prop-firm-rules) as `io.github.kburrus64-max/prop-firm-rules` (see [`server.json`](server.json)).
+  - Client config example: `{"mcpServers": {"prop-firm-rules": {"type": "http", "url": "https://floorguard-kappa.vercel.app/api/mcp"}}}`
+- **REST API**: [`/api/v1/firms`](https://floorguard-kappa.vercel.app/api/v1/firms), [`/api/v1/rules?program=ftmo_2step`](https://floorguard-kappa.vercel.app/api/v1/rules?program=ftmo_2step), [`/api/v1/check`](https://floorguard-kappa.vercel.app/api/v1/check?program=ftmo_2step&accountSize=100000&currentEquity=96500&todayPnl=-3000); OpenAPI 3.1 at [`/api/v1/openapi.json`](https://floorguard-kappa.vercel.app/api/v1/openapi.json).
+- **A2A agent card**: [`/.well-known/agent-card.json`](https://floorguard-kappa.vercel.app/.well-known/agent-card.json)
+- **llms.txt**: [`/llms.txt`](https://floorguard-kappa.vercel.app/llms.txt)
+
+Informational only, not financial advice; verify every value with the firm.
+
 ## Static vs trailing drawdown in 30 seconds
 
 - **Static:** the floor is fixed at initial balance minus the allowance (FTMO 2-Step: $90,000 on $100k).

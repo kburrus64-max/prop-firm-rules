@@ -1,0 +1,18 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.kburrus64-max/prop-firm-rules",
+  "title": "Prop Firm Rules (FloorGuard)",
+  "description": "Sourced prop-firm daily-loss and max-drawdown rules and a drawdown-room checker. Read-only, no auth.",
+  "version": "0.1.0",
+  "websiteUrl": "https://floorguard-kappa.vercel.app/api/",
+  "repository": {
+    "url": "https://github.com/kburrus64-max/prop-firm-rules",
+    "source": "github"
+  },
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://floorguard-kappa.vercel.app/api/mcp"
+    }
+  ]
+}
