@@ -1,5 +1,22 @@
 # prop-firm-rules: prop firm drawdown rules dataset + calculator (JS & Python)
 
+> **Free, sourced prop-firm drawdown rules for traders and AI agents: dataset, JS/Python calculator, REST API and a no-auth MCP server.**
+
+**MCP (Claude, Cursor, any MCP client), no key needed:**
+
+```json
+{
+  "mcpServers": {
+    "prop-firm-rules": {
+      "type": "http",
+      "url": "https://floorguard-kappa.vercel.app/api/mcp"
+    }
+  }
+}
+```
+
+Claude Code: `claude mcp add --transport http prop-firm-rules https://floorguard-kappa.vercel.app/api/mcp`
+
 **▶ Live calculator (free, no sign-up, runs in your browser): [floorguard-kappa.vercel.app/tools/drawdown-calculator.html](https://floorguard-kappa.vercel.app/tools/drawdown-calculator.html)**
 
 ![prop-firm-rules: sourced prop firm drawdown rules dataset and calculator](.github/social-preview.png)
