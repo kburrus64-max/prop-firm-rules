@@ -17,6 +17,9 @@
 
 Claude Code: `claude mcp add --transport http prop-firm-rules https://floorguard-kappa.vercel.app/api/mcp`
 
+Prefer to run it yourself? The repo ships a zero-dependency stdio server (`mcp/server.mjs`, Node 18+, works offline on the
+bundled dataset): `{"mcpServers": {"prop-firm-rules": {"command": "npx", "args": ["-y", "github:kburrus64-max/prop-firm-rules"]}}}`
+
 **▶ Live calculator (free, no sign-up, runs in your browser): [floorguard-kappa.vercel.app/tools/drawdown-calculator.html](https://floorguard-kappa.vercel.app/tools/drawdown-calculator.html)**
 
 ![prop-firm-rules: sourced prop firm drawdown rules dataset and calculator](.github/social-preview.png)
@@ -71,6 +74,7 @@ The dataset also includes each firm's published **copy-trading, multi-account an
 | [`js/index.mjs`](js/index.mjs) | Node entry: calculator + bundled dataset + `getProgram`, `getFirm`, `check` helpers |
 | [`python/prop_firm_rules/`](python/prop_firm_rules/__init__.py) | Python port with the same semantics (stdlib only) |
 | `js/test/`, `python/tests/` | Tests built mostly from the firms' own published worked examples |
+| [`mcp/server.mjs`](mcp/server.mjs) | Local MCP server (stdio, zero deps): `list_firms`, `get_rules`, `check_drawdown` |
 | [`scripts/rules-table.mjs`](scripts/rules-table.mjs) | Regenerates the table above |
 
 ## Usage
@@ -146,6 +150,8 @@ The same dataset is served live, free and read-only (no key, CORS open, ~60 requ
   - Tools: `list_firms`, `get_rules(program)`, `check_drawdown(program, accountSize, currentEquity, ...)`
   - Listed in the official [MCP Registry](https://registry.modelcontextprotocol.io/v0/servers?search=prop-firm-rules) as `io.github.kburrus64-max/prop-firm-rules` (see [`server.json`](server.json)).
   - Client config example: `{"mcpServers": {"prop-firm-rules": {"type": "http", "url": "https://floorguard-kappa.vercel.app/api/mcp"}}}`
+- **Local MCP server** (stdio, no network needed): `npx -y github:kburrus64-max/prop-firm-rules`, or after cloning,
+  `node mcp/server.mjs`. Same three tools and the same math as the hosted endpoint.
 - **REST API**: [`/api/v1/firms`](https://floorguard-kappa.vercel.app/api/v1/firms), [`/api/v1/rules?program=ftmo_2step`](https://floorguard-kappa.vercel.app/api/v1/rules?program=ftmo_2step), [`/api/v1/check`](https://floorguard-kappa.vercel.app/api/v1/check?program=ftmo_2step&accountSize=100000&currentEquity=96500&todayPnl=-3000); OpenAPI 3.1 at [`/api/v1/openapi.json`](https://floorguard-kappa.vercel.app/api/v1/openapi.json).
 - **A2A agent card**: [`/.well-known/agent-card.json`](https://floorguard-kappa.vercel.app/.well-known/agent-card.json)
 - **llms.txt**: [`/llms.txt`](https://floorguard-kappa.vercel.app/llms.txt)

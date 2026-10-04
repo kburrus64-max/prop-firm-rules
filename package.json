@@ -4,12 +4,47 @@
   "description": "Sourced prop firm drawdown rules (FTMO, FundedNext, The5ers, E8, FundingPips, Alpha Capital, Blue Guardian, Topstep, Apex) and a zero-dependency drawdown calculator.",
   "type": "module",
   "main": "js/index.mjs",
-  "exports": { ".": "./js/index.mjs", "./calc": "./js/calc.mjs", "./data/firms.json": "./data/firms.json" },
-  "files": ["js/calc.mjs", "js/index.mjs", "data/"],
-  "scripts": { "test": "node --test js/test/ && python3 -m unittest discover -s python/tests", "table": "node scripts/rules-table.mjs" },
-  "keywords": ["prop-firm", "drawdown", "trailing-drawdown", "daily-loss-limit", "ftmo", "topstep", "apex", "funded-trader", "risk-management", "calculator"],
+  "exports": {
+    ".": "./js/index.mjs",
+    "./calc": "./js/calc.mjs",
+    "./data/firms.json": "./data/firms.json"
+  },
+  "files": [
+    "js/calc.mjs",
+    "js/index.mjs",
+    "data/",
+    "mcp/"
+  ],
+  "scripts": {
+    "test": "node --test js/test/ && python3 -m unittest discover -s python/tests",
+    "table": "node scripts/rules-table.mjs",
+    "mcp": "node mcp/server.mjs"
+  },
+  "keywords": [
+    "prop-firm",
+    "drawdown",
+    "trailing-drawdown",
+    "daily-loss-limit",
+    "ftmo",
+    "topstep",
+    "apex",
+    "funded-trader",
+    "risk-management",
+    "calculator",
+    "mcp",
+    "mcp-server",
+    "model-context-protocol"
+  ],
   "homepage": "https://floorguard-kappa.vercel.app/tools/drawdown-calculator.html",
-  "repository": { "type": "git", "url": "https://github.com/kburrus64-max/prop-firm-rules.git" },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kburrus64-max/prop-firm-rules.git"
+  },
   "license": "MIT",
-  "engines": { "node": ">=18" }
+  "engines": {
+    "node": ">=18"
+  },
+  "bin": {
+    "prop-firm-rules-mcp": "mcp/server.mjs"
+  }
 }
